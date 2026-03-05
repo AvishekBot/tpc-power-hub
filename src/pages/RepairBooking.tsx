@@ -21,21 +21,21 @@ const RepairBooking = () => {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen transition-colors duration-300">
       <section className="bg-navy py-12">
         <div className="container mx-auto px-4">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl font-extrabold text-primary-foreground">{t('bookRepair')}</motion.h1>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-2xl sm:text-3xl font-extrabold text-primary-foreground">{t('bookRepair')}</motion.h1>
         </div>
       </section>
 
       <div className="container mx-auto px-4 py-12 max-w-2xl">
-        <form onSubmit={handleSubmit} className="bg-card rounded-lg p-6 border space-y-4">
-          <Input placeholder="Customer Name *" value={form.name} onChange={(e) => update('name', e.target.value)} required />
+        <form onSubmit={handleSubmit} className="bg-card rounded-xl p-6 border border-border space-y-4 transition-colors duration-300">
+          <Input placeholder="Customer Name *" value={form.name} onChange={(e) => update('name', e.target.value)} required className="min-h-[48px]" />
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input placeholder="Phone *" value={form.phone} onChange={(e) => update('phone', e.target.value)} required />
-            <Input placeholder="Email" type="email" value={form.email} onChange={(e) => update('email', e.target.value)} />
+            <Input placeholder="Phone *" value={form.phone} onChange={(e) => update('phone', e.target.value)} required className="min-h-[48px]" />
+            <Input placeholder="Email" type="email" value={form.email} onChange={(e) => update('email', e.target.value)} className="min-h-[48px]" />
           </div>
-          <select value={form.productType} onChange={(e) => update('productType', e.target.value)} className="w-full border rounded-lg px-3 py-2 text-sm bg-card" required>
+          <select value={form.productType} onChange={(e) => update('productType', e.target.value)} className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground min-h-[48px]" required>
             <option value="">Product Type *</option>
             <option value="UPS">UPS</option>
             <option value="Stabilizer">Stabilizer</option>
@@ -44,11 +44,11 @@ const RepairBooking = () => {
             <option value="Drive">Drive</option>
             <option value="Other">Other</option>
           </select>
-          <Input placeholder="Brand & Model" value={form.brandModel} onChange={(e) => update('brandModel', e.target.value)} />
-          <textarea placeholder="Problem Description *" value={form.problem} onChange={(e) => update('problem', e.target.value)} required className="w-full border rounded-lg px-3 py-2 text-sm bg-card min-h-[100px]" />
-          <Input type="date" placeholder="Preferred Service Date" value={form.date} onChange={(e) => update('date', e.target.value)} />
-          <Input placeholder="Location / Address" value={form.address} onChange={(e) => update('address', e.target.value)} />
-          <Button type="submit" className="w-full bg-accent text-accent-foreground rounded-lg h-12 font-bold">{t('submitRequest')}</Button>
+          <Input placeholder="Brand & Model" value={form.brandModel} onChange={(e) => update('brandModel', e.target.value)} className="min-h-[48px]" />
+          <textarea placeholder="Problem Description *" value={form.problem} onChange={(e) => update('problem', e.target.value)} required className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground min-h-[100px]" />
+          <Input type="date" placeholder="Preferred Service Date" value={form.date} onChange={(e) => update('date', e.target.value)} className="min-h-[48px]" />
+          <Input placeholder="Location / Address" value={form.address} onChange={(e) => update('address', e.target.value)} className="min-h-[48px]" />
+          <Button type="submit" className="w-full bg-accent text-accent-foreground rounded-lg h-12 font-bold hover:scale-105 transition-all duration-200">{t('submitRequest')}</Button>
         </form>
       </div>
     </div>

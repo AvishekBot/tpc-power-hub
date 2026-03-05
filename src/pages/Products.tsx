@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 
 const Products = () => {
   const { t } = useLanguage();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const addItem = useCartStore((s) => s.addItem);
   const [search, setSearch] = useState('');
   const [mobileFilters, setMobileFilters] = useState(false);
@@ -50,10 +50,10 @@ const Products = () => {
   const FilterSidebar = () => (
     <div className="space-y-6">
       <div>
-        <h3 className="font-bold text-sm mb-3">{t('filterBy')}</h3>
+        <h3 className="font-bold text-sm mb-3 text-foreground">{t('filterBy')}</h3>
         <div className="space-y-2">
           {categories.map((cat) => (
-            <label key={cat.slug} className="flex items-center gap-2 text-sm cursor-pointer">
+            <label key={cat.slug} className="flex items-center gap-2 text-sm cursor-pointer text-foreground">
               <input
                 type="checkbox"
                 checked={selectedCategories.includes(cat.slug)}
@@ -66,14 +66,14 @@ const Products = () => {
         </div>
       </div>
       <div>
-        <h3 className="font-bold text-sm mb-3">{t('sortBy')}</h3>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full border rounded-lg px-3 py-2 text-sm bg-card">
+        <h3 className="font-bold text-sm mb-3 text-foreground">{t('sortBy')}</h3>
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground min-h-[48px]">
           <option value="featured">Featured</option>
           <option value="price-asc">Price: Low → High</option>
           <option value="price-desc">Price: High → Low</option>
         </select>
       </div>
-      <label className="flex items-center gap-2 text-sm cursor-pointer">
+      <label className="flex items-center gap-2 text-sm cursor-pointer text-foreground">
         <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="rounded" />
         {t('inStockOnly')}
       </label>
@@ -81,7 +81,7 @@ const Products = () => {
   );
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen transition-colors duration-300">
       <div className="bg-navy py-8">
         <div className="container mx-auto px-4">
           <h1 className="text-2xl md:text-3xl font-extrabold text-primary-foreground">{t('products')}</h1>
@@ -91,7 +91,7 @@ const Products = () => {
               placeholder={t('searchProducts')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 bg-card border-0 rounded-lg"
+              className="pl-10 bg-card border-0 rounded-lg min-h-[48px]"
             />
           </div>
         </div>
@@ -99,19 +99,19 @@ const Products = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="lg:hidden mb-4">
-          <Button variant="outline" className="gap-2" onClick={() => setMobileFilters(true)}>
+          <Button variant="outline" className="gap-2 min-h-[48px]" onClick={() => setMobileFilters(true)}>
             <SlidersHorizontal className="w-4 h-4" /> Filters
           </Button>
         </div>
 
         {mobileFilters && (
-          <div className="fixed inset-0 z-50 bg-background p-6 overflow-auto lg:hidden">
+          <div className="fixed inset-0 z-50 bg-background p-6 overflow-auto lg:hidden transition-colors duration-300">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold">Filters</h2>
-              <button onClick={() => setMobileFilters(false)}><X className="w-5 h-5" /></button>
+              <h2 className="text-lg font-bold text-foreground">Filters</h2>
+              <button onClick={() => setMobileFilters(false)} className="text-foreground"><X className="w-5 h-5" /></button>
             </div>
             <FilterSidebar />
-            <Button className="w-full mt-6 bg-accent text-accent-foreground" onClick={() => setMobileFilters(false)}>Apply</Button>
+            <Button className="w-full mt-6 bg-accent text-accent-foreground min-h-[48px]" onClick={() => setMobileFilters(false)}>Apply</Button>
           </div>
         )}
 
@@ -120,13 +120,13 @@ const Products = () => {
             <FilterSidebar />
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <p className="text-sm text-muted-foreground mb-4">{filtered.length} products</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
               {filtered.map((product) => (
-                <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:border-accent border border-transparent transition-all group">
-                  <div className="relative h-48 bg-muted flex items-center justify-center">
-                    <Zap className="w-16 h-16 text-muted-foreground/30" />
+                <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-accent border border-border transition-all duration-300 group">
+                  <div className="relative h-40 md:h-48 bg-muted flex items-center justify-center">
+                    <Zap className="w-12 md:w-16 h-12 md:h-16 text-muted-foreground/30" />
                     {product.stock === 0 && <span className="absolute top-2 left-2 bg-destructive text-destructive-foreground text-xs font-bold px-2 py-1 rounded">{t('outOfStock')}</span>}
                     {product.sale_price && product.stock > 0 && <span className="absolute top-2 left-2 bg-amber text-amber-foreground text-xs font-bold px-2 py-1 rounded">{t('sale')}</span>}
                   </div>
@@ -141,7 +141,7 @@ const Products = () => {
                       <Button
                         size="sm"
                         disabled={product.stock === 0}
-                        className="flex-1 bg-amber hover:bg-amber/90 text-amber-foreground text-xs rounded-lg font-bold"
+                        className="flex-1 bg-amber hover:bg-amber/90 text-amber-foreground text-xs rounded-lg font-bold hover:scale-105 transition-all duration-200"
                         onClick={() => addItem({ id: product.id, name: product.name, price: product.price, sale_price: product.sale_price, image: '/placeholder.svg' })}
                       >
                         {t('addToCart')}
