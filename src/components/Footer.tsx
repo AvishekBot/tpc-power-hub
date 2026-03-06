@@ -13,8 +13,8 @@ const Footer = () => {
           {/* Logo & Tagline */}
           <div className="sm:col-span-2 lg:col-span-1 min-w-[260px]">
             <div className="flex items-center gap-3 mb-3">
-              <div className="bg-white/10 rounded-xl p-1.5 shrink-0">
-                <img src={logo} alt="TPC Logo" className="h-10 w-10 rounded-lg object-contain" />
+              <div className="bg-accent rounded-xl w-10 h-10 flex items-center justify-center shrink-0">
+                <Zap className="w-5 h-5 text-accent-foreground" />
               </div>
               <h3 className="text-lg font-extrabold whitespace-nowrap">T.P.C Power Solutions</h3>
             </div>
