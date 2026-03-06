@@ -14,7 +14,487 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ads: {
+        Row: {
+          created_at: string | null
+          display_order: number | null
+          end_date: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          link_url: string | null
+          position: string | null
+          start_date: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          link_url?: string | null
+          position?: string | null
+          start_date?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          link_url?: string | null
+          position?: string | null
+          start_date?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      announcements: {
+        Row: {
+          created_at: string | null
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          text_en: string
+          text_np: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          text_en: string
+          text_np?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          text_en?: string
+          text_np?: string | null
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          category: string | null
+          content: string | null
+          created_at: string | null
+          id: string
+          is_published: boolean | null
+          meta_description: string | null
+          meta_title: string | null
+          slug: string
+          tags: string[] | null
+          thumbnail_url: string | null
+          title_en: string
+          title_np: string | null
+        }
+        Insert: {
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_published?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          slug: string
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title_en: string
+          title_np?: string | null
+        }
+        Update: {
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_published?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          slug?: string
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title_en?: string
+          title_np?: string | null
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          created_at: string | null
+          display_order: number | null
+          icon: string | null
+          id: string
+          is_visible: boolean | null
+          name_en: string
+          name_np: string | null
+          slug: string
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number | null
+          icon?: string | null
+          id?: string
+          is_visible?: boolean | null
+          name_en: string
+          name_np?: string | null
+          slug: string
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number | null
+          icon?: string | null
+          id?: string
+          is_visible?: boolean | null
+          name_en?: string
+          name_np?: string | null
+          slug?: string
+        }
+        Relationships: []
+      }
+      contacts: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          is_read: boolean | null
+          message: string | null
+          name: string
+          phone: string | null
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string | null
+          name: string
+          phone?: string | null
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string | null
+          name?: string
+          phone?: string | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
+      faqs: {
+        Row: {
+          answer_en: string
+          answer_np: string | null
+          category: string | null
+          created_at: string | null
+          display_order: number | null
+          id: string
+          is_visible: boolean | null
+          question_en: string
+          question_np: string | null
+        }
+        Insert: {
+          answer_en: string
+          answer_np?: string | null
+          category?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_visible?: boolean | null
+          question_en: string
+          question_np?: string | null
+        }
+        Update: {
+          answer_en?: string
+          answer_np?: string | null
+          category?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          is_visible?: boolean | null
+          question_en?: string
+          question_np?: string | null
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          id: string
+          order_id: string | null
+          price: number
+          product_id: string | null
+          product_name: string
+          quantity: number
+        }
+        Insert: {
+          id?: string
+          order_id?: string | null
+          price: number
+          product_id?: string | null
+          product_name: string
+          quantity: number
+        }
+        Update: {
+          id?: string
+          order_id?: string | null
+          price?: number
+          product_id?: string | null
+          product_name?: string
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string | null
+          customer_address: string
+          customer_city: string | null
+          customer_district: string | null
+          customer_email: string | null
+          customer_name: string
+          customer_phone: string
+          delivery_charge: number | null
+          id: string
+          notes: string | null
+          order_status: string | null
+          payment_method: string | null
+          payment_status: string | null
+          subtotal: number
+          total_amount: number
+        }
+        Insert: {
+          created_at?: string | null
+          customer_address: string
+          customer_city?: string | null
+          customer_district?: string | null
+          customer_email?: string | null
+          customer_name: string
+          customer_phone: string
+          delivery_charge?: number | null
+          id?: string
+          notes?: string | null
+          order_status?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          subtotal: number
+          total_amount: number
+        }
+        Update: {
+          created_at?: string | null
+          customer_address?: string
+          customer_city?: string | null
+          customer_district?: string | null
+          customer_email?: string | null
+          customer_name?: string
+          customer_phone?: string
+          delivery_charge?: number | null
+          id?: string
+          notes?: string | null
+          order_status?: string | null
+          payment_method?: string | null
+          payment_status?: string | null
+          subtotal?: number
+          total_amount?: number
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string | null
+          category_id: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          images: string[] | null
+          is_active: boolean | null
+          is_featured: boolean | null
+          name: string
+          price: number
+          sale_price: number | null
+          short_description: string | null
+          slug: string
+          specifications: Json | null
+          spin_images: string[] | null
+          stock: number | null
+        }
+        Insert: {
+          category?: string | null
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          name: string
+          price: number
+          sale_price?: number | null
+          short_description?: string | null
+          slug: string
+          specifications?: Json | null
+          spin_images?: string[] | null
+          stock?: number | null
+        }
+        Update: {
+          category?: string | null
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          name?: string
+          price?: number
+          sale_price?: number | null
+          short_description?: string | null
+          slug?: string
+          specifications?: Json | null
+          spin_images?: string[] | null
+          stock?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      repair_bookings: {
+        Row: {
+          address: string | null
+          brand_model: string | null
+          created_at: string | null
+          customer_name: string
+          email: string | null
+          id: string
+          notes: string | null
+          phone: string
+          preferred_date: string | null
+          problem: string | null
+          product_type: string | null
+          status: string | null
+        }
+        Insert: {
+          address?: string | null
+          brand_model?: string | null
+          created_at?: string | null
+          customer_name: string
+          email?: string | null
+          id?: string
+          notes?: string | null
+          phone: string
+          preferred_date?: string | null
+          problem?: string | null
+          product_type?: string | null
+          status?: string | null
+        }
+        Update: {
+          address?: string | null
+          brand_model?: string | null
+          created_at?: string | null
+          customer_name?: string
+          email?: string | null
+          id?: string
+          notes?: string | null
+          phone?: string
+          preferred_date?: string | null
+          problem?: string | null
+          product_type?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          created_at: string | null
+          customer_city: string | null
+          customer_name: string
+          id: string
+          is_approved: boolean | null
+          message: string | null
+          product_id: string | null
+          rating: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          customer_city?: string | null
+          customer_name: string
+          id?: string
+          is_approved?: boolean | null
+          message?: string | null
+          product_id?: string | null
+          rating?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          customer_city?: string | null
+          customer_name?: string
+          id?: string
+          is_approved?: boolean | null
+          message?: string | null
+          product_id?: string | null
+          rating?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      settings: {
+        Row: {
+          created_at: string | null
+          id: string
+          key: string
+          value: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          key: string
+          value?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          key?: string
+          value?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
