@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Youtube, Instagram, Phone, Mail, MapPin } from 'lucide-react';
+import { Facebook, Youtube, Instagram, Phone, Mail, MapPin, Zap } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { categories } from '@/lib/categories';
-import logo from '@/assets/logo.jpg';
 
 const Footer = () => {
   const { t } = useLanguage();
