@@ -12,10 +12,12 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo & Tagline */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <img src={logo} alt="TPC Logo" className="h-10 w-10 rounded-lg object-cover" />
-              <h3 className="text-xl font-extrabold">T.P.C Power Solutions</h3>
+          <div className="sm:col-span-2 lg:col-span-1 min-w-[260px]">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-white/10 rounded-xl p-1.5 shrink-0">
+                <img src={logo} alt="TPC Logo" className="h-10 w-10 rounded-lg object-contain" />
+              </div>
+              <h3 className="text-lg font-extrabold whitespace-nowrap">T.P.C Power Solutions</h3>
             </div>
             <p className="text-primary-foreground/70 text-sm mb-4">{t('footerTagline')}</p>
             <div className="flex gap-3">

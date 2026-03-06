@@ -25,15 +25,15 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-card shadow-md sticky top-0 z-50 transition-colors duration-300">
+    <nav className="bg-card shadow-lg sticky top-0 z-50 transition-colors duration-300 border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <div className="bg-white dark:bg-transparent rounded-lg p-0.5">
-              <img src={logo} alt="TPC Logo" className="h-12 w-12 rounded-lg object-contain" />
+            <div className="bg-navy rounded-xl p-1.5 shadow-md">
+              <img src={logo} alt="TPC Logo" className="h-10 w-10 rounded-lg object-contain" />
             </div>
-            <span className="hidden sm:inline font-extrabold text-lg whitespace-nowrap text-foreground transition-colors duration-300">T.P.C Power Solutions</span>
+            <span className="hidden sm:inline font-extrabold text-lg whitespace-nowrap text-foreground transition-colors duration-300 tracking-tight">T.P.C Power Solutions</span>
           </Link>
 
           {/* Desktop Nav */}
