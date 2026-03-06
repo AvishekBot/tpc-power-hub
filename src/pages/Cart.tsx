@@ -11,11 +11,13 @@ const Cart = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-background transition-colors duration-300">
-        <ShoppingBag className="w-16 h-16 text-muted-foreground/30 mb-4" />
-        <h2 className="text-xl font-bold mb-2 text-foreground">Your cart is empty</h2>
-        <p className="text-muted-foreground mb-6">Add some products to get started!</p>
-        <Button asChild className="bg-accent text-accent-foreground rounded-lg min-h-[48px]"><Link to="/products">{t('browseProducts')}</Link></Button>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-background transition-colors duration-300 px-4">
+        <div className="w-32 h-32 mb-6 rounded-full bg-accent/10 flex items-center justify-center">
+          <ShoppingBag className="w-16 h-16 text-accent/40" />
+        </div>
+        <h2 className="text-2xl font-extrabold mb-2 text-foreground">Your cart is empty</h2>
+        <p className="text-muted-foreground mb-8 text-center max-w-md">Looks like you haven't added any power solutions yet. Browse our premium range of products!</p>
+        <Button asChild className="bg-accent text-accent-foreground rounded-lg min-h-[48px] px-8 font-semibold hover:scale-105 transition-all duration-200"><Link to="/products">{t('browseProducts')}</Link></Button>
       </div>
     );
   }

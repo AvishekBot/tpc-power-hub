@@ -29,14 +29,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-3 shrink-0">
             <div className="bg-white dark:bg-transparent rounded-lg p-0.5">
-              <img src={logo} alt="TPC Logo" className="h-10 w-10 rounded-lg object-cover" />
+              <img src={logo} alt="TPC Logo" className="h-12 w-12 rounded-lg object-contain" />
             </div>
-            <div className="hidden sm:block">
-              <span className="font-extrabold text-lg text-foreground transition-colors duration-300">T.P.C</span>
-              <span className="text-xs block text-muted-foreground leading-none transition-colors duration-300">Power Solutions</span>
-            </div>
+            <span className="hidden sm:inline font-extrabold text-lg whitespace-nowrap text-foreground transition-colors duration-300">T.P.C Power Solutions</span>
           </Link>
 
           {/* Desktop Nav */}
