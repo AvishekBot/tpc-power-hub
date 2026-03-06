@@ -83,13 +83,18 @@ const Checkout = () => {
             <div className="bg-card rounded-xl p-6 border border-border space-y-3">
               <h3 className="font-bold text-foreground">Payment Method</h3>
               {[
-                { value: 'khalti', label: '💜 Khalti' },
-                { value: 'esewa', label: '🟢 eSewa' },
-                { value: 'imepay', label: '🔵 IME Pay' },
-                { value: 'cod', label: '💵 Cash on Delivery' },
+                { value: 'khalti', label: 'Khalti', logo: '/images/khalti-logo.jpg' },
+                { value: 'esewa', label: 'eSewa', logo: '/images/esewa-logo.webp' },
+                { value: 'imepay', label: 'IME Pay', logo: '/images/imepay-logo.png' },
+                { value: 'cod', label: 'Cash on Delivery', logo: null },
               ].map((pm) => (
-                <label key={pm.value} className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-pointer hover:border-accent transition-colors duration-200 min-h-[48px]">
-                  <input type="radio" name="payment" value={pm.value} checked={form.payment === pm.value} onChange={(e) => update('payment', e.target.value)} />
+                <label key={pm.value} className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-accent transition-colors duration-200 min-h-[48px] ${form.payment === pm.value ? 'border-accent bg-accent/5' : 'border-border'}`}>
+                  <input type="radio" name="payment" value={pm.value} checked={form.payment === pm.value} onChange={(e) => update('payment', e.target.value)} className="accent-[hsl(var(--accent))]" />
+                  {pm.logo ? (
+                    <img src={pm.logo} alt={pm.label} className="h-6 w-auto object-contain" />
+                  ) : (
+                    <Banknote className="h-6 w-6 text-emerald-600" />
+                  )}
                   <span className="font-medium text-sm text-foreground">{pm.label}</span>
                 </label>
               ))}
