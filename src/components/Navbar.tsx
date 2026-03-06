@@ -5,7 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCartStore } from '@/stores/cartStore';
 import { categories } from '@/lib/categories';
-import logo from '@/assets/logo.jpg';
+import { Zap } from 'lucide-react';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
@@ -29,9 +29,9 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 shrink-0">
-            <div className="bg-navy rounded-xl p-1.5 shadow-md">
-              <img src={logo} alt="TPC Logo" className="h-10 w-10 rounded-lg object-contain" />
+          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+            <div className="bg-accent rounded-xl w-10 h-10 flex items-center justify-center shadow-md">
+              <Zap className="w-5 h-5 text-accent-foreground" />
             </div>
             <span className="hidden sm:inline font-extrabold text-lg whitespace-nowrap text-foreground transition-colors duration-300 tracking-tight">T.P.C Power Solutions</span>
           </Link>
