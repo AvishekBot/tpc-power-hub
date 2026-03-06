@@ -5,7 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useCartStore } from '@/stores/cartStore';
 import { categories } from '@/lib/categories';
-import logo from '@/assets/logo.jpg';
+import { Zap } from 'lucide-react';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
