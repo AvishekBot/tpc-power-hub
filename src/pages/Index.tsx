@@ -33,29 +33,55 @@ const Index = () => {
     <div>
       {/* Hero — always dark navy */}
       <section className="bg-navy circuit-pattern relative overflow-hidden">
-        <div className="container mx-auto px-4 py-12 sm:py-16 md:py-24">
+        {/* Floating animated elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div animate={{ y: [-20, 20, -20], x: [0, 10, 0], rotate: [0, 15, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[15%] left-[8%] text-accent/15">
+            <Zap className="w-16 h-16" />
+          </motion.div>
+          <motion.div animate={{ y: [10, -15, 10], x: [-5, 5, -5] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[60%] left-[5%] text-accent/10">
+            <Zap className="w-10 h-10" />
+          </motion.div>
+          <motion.div animate={{ y: [-10, 20, -10], rotate: [0, -20, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[20%] right-[12%] text-amber/10">
+            <Zap className="w-12 h-12" />
+          </motion.div>
+          <motion.div animate={{ y: [15, -10, 15], x: [5, -5, 5] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} className="absolute bottom-[25%] right-[8%] text-accent/10">
+            <Zap className="w-8 h-8" />
+          </motion.div>
+          {/* Circuit lines */}
+          <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
+            <motion.line x1="10%" y1="20%" x2="40%" y2="80%" stroke="hsl(217, 91%, 60%)" strokeWidth="1" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }} />
+            <motion.line x1="60%" y1="10%" x2="90%" y2="70%" stroke="hsl(217, 91%, 60%)" strokeWidth="1" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", delay: 1.5 }} />
+            <motion.circle cx="40%" cy="80%" r="3" fill="hsl(217, 91%, 60%)" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }} transition={{ duration: 3, repeat: Infinity }} />
+            <motion.circle cx="90%" cy="70%" r="3" fill="hsl(217, 91%, 60%)" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }} transition={{ duration: 4, repeat: Infinity, delay: 1.5 }} />
+          </svg>
+          {/* Gradient overlay for depth */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[hsl(var(--navy))]/50" />
+        </div>
+
+        <div className="container mx-auto px-4 py-14 sm:py-20 md:py-28 relative z-10">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <motion.div initial="hidden" animate="visible" variants={stagger}>
-              <motion.h1 variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-primary-foreground leading-tight" style={{ lineHeight: 1.1 }}>
+              <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-primary-foreground leading-[1.1] tracking-tight">
                 {t('heroTitle')}
               </motion.h1>
-              <motion.p variants={fadeUp} className="mt-4 text-primary-foreground/70 text-base md:text-lg max-w-lg" style={{ lineHeight: 1.7 }}>
+              <motion.p variants={fadeUp} className="mt-5 text-primary-foreground/70 text-base md:text-lg max-w-lg" style={{ lineHeight: 1.7 }}>
                 {t('heroSubtitle')}
               </motion.p>
-              <motion.div variants={fadeUp} className="mt-6 md:mt-8 flex flex-wrap gap-3 md:gap-4">
-                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg px-6 h-12 text-base font-bold hover:scale-105 transition-all duration-200">
+              <motion.div variants={fadeUp} className="mt-8 md:mt-10 flex flex-wrap gap-3 md:gap-4">
+                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg px-8 h-12 text-base font-bold hover:scale-105 transition-all duration-200 shadow-lg shadow-accent/25">
                   <Link to="/products">{t('browseProducts')}</Link>
                 </Button>
-                <Button asChild variant="outline" className="border-amber text-amber hover:bg-amber/10 rounded-lg px-6 h-12 text-base font-bold hover:scale-105 transition-all duration-200">
+                <Button asChild variant="outline" className="border-amber text-amber hover:bg-amber/10 rounded-lg px-8 h-12 text-base font-bold hover:scale-105 transition-all duration-200">
                   <Link to="/contact">{t('getQuote')}</Link>
                 </Button>
               </motion.div>
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} className="hidden md:flex justify-center">
-              <div className="relative w-56 h-56 lg:w-72 lg:h-72">
+              <div className="relative w-64 h-64 lg:w-80 lg:h-80">
                 <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl animate-pulse" />
-                <div className="relative bg-navy-light rounded-full w-full h-full flex items-center justify-center border border-accent/30">
-                  <Zap className="w-20 h-20 lg:w-24 lg:h-24 text-accent" strokeWidth={1.5} />
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 60, repeat: Infinity, ease: "linear" }} className="absolute inset-[-10px] border border-dashed border-accent/20 rounded-full" />
+                <div className="relative bg-navy-light rounded-full w-full h-full flex items-center justify-center border border-accent/30 shadow-2xl shadow-accent/10">
+                  <Zap className="w-24 h-24 lg:w-28 lg:h-28 text-accent drop-shadow-[0_0_20px_rgba(37,99,235,0.4)]" strokeWidth={1.5} />
                 </div>
               </div>
             </motion.div>

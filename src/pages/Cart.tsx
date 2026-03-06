@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, ShoppingCart, Package } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCartStore } from '@/stores/cartStore';
 import { Button } from '@/components/ui/button';
@@ -11,13 +12,26 @@ const Cart = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-background transition-colors duration-300 px-4">
-        <div className="w-32 h-32 mb-6 rounded-full bg-accent/10 flex items-center justify-center">
-          <ShoppingBag className="w-16 h-16 text-accent/40" />
-        </div>
-        <h2 className="text-2xl font-extrabold mb-2 text-foreground">Your cart is empty</h2>
-        <p className="text-muted-foreground mb-8 text-center max-w-md">Looks like you haven't added any power solutions yet. Browse our premium range of products!</p>
-        <Button asChild className="bg-accent text-accent-foreground rounded-lg min-h-[48px] px-8 font-semibold hover:scale-105 transition-all duration-200"><Link to="/products">{t('browseProducts')}</Link></Button>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center bg-background transition-colors duration-300 px-4 py-16">
+        <motion.div
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-40 h-40 mb-8 rounded-full bg-accent/10 border-2 border-dashed border-accent/20 flex items-center justify-center relative"
+        >
+          <ShoppingCart className="w-16 h-16 text-accent/50" />
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-amber/20 flex items-center justify-center"
+          >
+            <Package className="w-4 h-4 text-amber" />
+          </motion.div>
+        </motion.div>
+        <h2 className="text-2xl md:text-3xl font-extrabold mb-3 text-foreground">Your cart is empty</h2>
+        <p className="text-muted-foreground mb-8 text-center max-w-md leading-relaxed">Looks like you haven't added any power solutions yet. Browse our premium range of products!</p>
+        <Button asChild className="bg-accent text-accent-foreground rounded-lg min-h-[48px] px-8 font-semibold hover:scale-105 transition-all duration-200 shadow-lg">
+          <Link to="/products">{t('browseProducts')}</Link>
+        </Button>
       </div>
     );
   }
