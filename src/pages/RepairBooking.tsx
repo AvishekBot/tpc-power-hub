@@ -1,22 +1,40 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSettings } from '@/hooks/use-supabase-data';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
 
 const RepairBooking = () => {
   const { t } = useLanguage();
+  const { data: settings } = useSettings();
+  const whatsapp = settings?.whatsapp || '977XXXXXXXXXX';
   const [form, setForm] = useState({ name: '', phone: '', email: '', productType: '', brandModel: '', problem: '', date: '', address: '' });
+  const [submitting, setSubmitting] = useState(false);
   const update = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.phone || !form.productType || !form.problem) {
       toast({ title: 'Please fill required fields', variant: 'destructive' }); return;
     }
+    setSubmitting(true);
+    const { error } = await supabase.from('repair_bookings').insert({
+      customer_name: form.name,
+      phone: form.phone,
+      email: form.email || null,
+      product_type: form.productType,
+      brand_model: form.brandModel || null,
+      problem: form.problem,
+      preferred_date: form.date || null,
+      address: form.address || null,
+    });
+    setSubmitting(false);
+    if (error) { toast({ title: 'Failed to submit booking', variant: 'destructive' }); return; }
     toast({ title: 'Repair booking submitted successfully!' });
-    window.open(`https://wa.me/977XXXXXXXXXX?text=Repair Request: ${form.productType} - ${form.problem}`, '_blank');
+    window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(`Repair Request: ${form.productType} - ${form.problem}`)}`, '_blank');
     setForm({ name: '', phone: '', email: '', productType: '', brandModel: '', problem: '', date: '', address: '' });
   };
 
@@ -48,7 +66,9 @@ const RepairBooking = () => {
           <textarea placeholder="Problem Description *" value={form.problem} onChange={(e) => update('problem', e.target.value)} required className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground min-h-[100px]" />
           <Input type="date" placeholder="Preferred Service Date" value={form.date} onChange={(e) => update('date', e.target.value)} className="min-h-[48px]" />
           <Input placeholder="Location / Address" value={form.address} onChange={(e) => update('address', e.target.value)} className="min-h-[48px]" />
-          <Button type="submit" className="w-full bg-accent text-accent-foreground rounded-lg h-12 font-bold hover:scale-105 transition-all duration-200">{t('submitRequest')}</Button>
+          <Button type="submit" disabled={submitting} className="w-full bg-accent text-accent-foreground rounded-lg h-12 font-bold hover:scale-105 transition-all duration-200">
+            {submitting ? 'Submitting...' : t('submitRequest')}
+          </Button>
         </form>
       </div>
     </div>

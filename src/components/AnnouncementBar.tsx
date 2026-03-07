@@ -1,10 +1,15 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { sampleAnnouncements } from '@/lib/sampleData';
+import { useAnnouncements } from '@/hooks/use-supabase-data';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const AnnouncementBar = () => {
   const { lang } = useLanguage();
-  const announcements = sampleAnnouncements.filter(a => a.is_active);
-  const text = announcements.map(a => lang === 'np' ? a.text_np : a.text_en).join('     •     ');
+  const { data: announcements, isLoading } = useAnnouncements();
+
+  if (isLoading) return <div className="bg-amber py-2.5"><Skeleton className="h-5 w-3/4 mx-auto" /></div>;
+  if (!announcements?.length) return null;
+
+  const text = announcements.map(a => lang === 'np' ? (a.text_np || a.text_en) : a.text_en).join('     •     ');
 
   return (
     <div className="bg-amber text-amber-foreground py-2.5 overflow-hidden shadow-sm">

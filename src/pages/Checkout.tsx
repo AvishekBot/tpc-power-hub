@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCartStore } from '@/stores/cartStore';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Banknote } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -14,14 +15,52 @@ const Checkout = () => {
   const { items, subtotal, clearCart } = useCartStore();
   const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', city: '', district: '', postal: '', notes: '', payment: 'cod' });
   const [submitted, setSubmitted] = useState(false);
-  const [orderId] = useState(() => `TPC-${Date.now().toString(36).toUpperCase()}`);
+  const [orderId, setOrderId] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.phone || !form.address || !form.district) {
       toast({ title: 'Please fill all required fields', variant: 'destructive' });
       return;
     }
+    setSubmitting(true);
+    const total = subtotal();
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
+      .insert({
+        customer_name: form.name,
+        customer_email: form.email || null,
+        customer_phone: form.phone,
+        customer_address: form.address,
+        customer_city: form.city || null,
+        customer_district: form.district,
+        payment_method: form.payment,
+        notes: form.notes || null,
+        subtotal: total,
+        total_amount: total,
+      })
+      .select('id')
+      .single();
+
+    if (orderError || !order) {
+      setSubmitting(false);
+      toast({ title: 'Failed to place order', variant: 'destructive' });
+      return;
+    }
+
+    const orderItems = items.map((item) => ({
+      order_id: order.id,
+      product_id: item.id,
+      product_name: item.name,
+      price: item.sale_price || item.price,
+      quantity: item.quantity,
+    }));
+
+    await supabase.from('order_items').insert(orderItems);
+
+    setSubmitting(false);
+    setOrderId(order.id);
     setSubmitted(true);
     clearCart();
     toast({ title: t('orderSuccess') });
@@ -35,7 +74,7 @@ const Checkout = () => {
             <span className="text-3xl">✓</span>
           </div>
           <h2 className="text-2xl font-extrabold mb-2 text-foreground">{t('orderSuccess')}</h2>
-          <p className="text-muted-foreground mb-4">Order ID: <span className="font-bold text-foreground">{orderId}</span></p>
+          <p className="text-muted-foreground mb-4">Order ID: <span className="font-bold text-foreground text-xs break-all">{orderId}</span></p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild className="bg-accent text-accent-foreground rounded-lg min-h-[48px]"><Link to="/products">{t('continueShopping')}</Link></Button>
             <Button asChild variant="outline" className="rounded-lg min-h-[48px]"><Link to={`/track-order?id=${orderId}`}>{t('trackOrder')}</Link></Button>
@@ -116,7 +155,9 @@ const Checkout = () => {
                 <span className="text-accent">Rs. {subtotal().toLocaleString()}</span>
               </div>
             </div>
-            <Button type="submit" className="w-full mt-6 bg-accent text-accent-foreground rounded-lg h-12 font-bold hover:scale-105 transition-all duration-200">{t('placeOrder')}</Button>
+            <Button type="submit" disabled={submitting} className="w-full mt-6 bg-accent text-accent-foreground rounded-lg h-12 font-bold hover:scale-105 transition-all duration-200">
+              {submitting ? 'Placing Order...' : t('placeOrder')}
+            </Button>
           </div>
         </form>
       </div>

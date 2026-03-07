@@ -2,20 +2,24 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MessageCircle, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { sampleFAQs } from '@/lib/sampleData';
+import { useFAQs, useSettings } from '@/hooks/use-supabase-data';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const FAQ = () => {
   const { t, lang } = useLanguage();
   const [search, setSearch] = useState('');
   const [openId, setOpenId] = useState<string | null>(null);
+  const { data: faqs, isLoading } = useFAQs();
+  const { data: settings } = useSettings();
+  const whatsapp = settings?.whatsapp || '977XXXXXXXXXX';
 
-  const filtered = sampleFAQs.filter((f) => {
-    if (!search) return f.is_visible;
+  const filtered = (faqs || []).filter((f) => {
+    if (!search) return true;
     const q = search.toLowerCase();
-    const question = lang === 'np' ? f.question_np : f.question_en;
-    return f.is_visible && question.toLowerCase().includes(q);
+    const question = lang === 'np' ? (f.question_np || f.question_en) : f.question_en;
+    return question.toLowerCase().includes(q);
   });
 
   return (
@@ -31,28 +35,31 @@ const FAQ = () => {
       </section>
 
       <div className="container mx-auto px-4 py-12 max-w-3xl space-y-3">
-        {filtered.map((faq) => (
-          <div key={faq.id} className="bg-card rounded-xl border border-border overflow-hidden transition-colors duration-300">
-            <button
-              onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-              className="w-full flex items-center justify-between p-4 text-left min-h-[48px]"
-            >
-              <span className="font-semibold text-sm pr-4 text-foreground">{lang === 'np' ? faq.question_np : faq.question_en}</span>
-              <ChevronDown className={`w-4 h-4 shrink-0 transition-transform duration-200 text-muted-foreground ${openId === faq.id ? 'rotate-180' : ''}`} />
-            </button>
-            {openId === faq.id && (
-              <div className="px-4 pb-4 text-sm text-muted-foreground border-t border-border pt-3" style={{ lineHeight: 1.7 }}>
-                {lang === 'np' ? faq.answer_np : faq.answer_en}
+        {isLoading ? (
+          Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-14 rounded-xl" />)
+        ) : (
+          <>
+            {filtered.map((faq) => (
+              <div key={faq.id} className="bg-card rounded-xl border border-border overflow-hidden transition-colors duration-300">
+                <button onClick={() => setOpenId(openId === faq.id ? null : faq.id)} className="w-full flex items-center justify-between p-4 text-left min-h-[48px]">
+                  <span className="font-semibold text-sm pr-4 text-foreground">{lang === 'np' ? (faq.question_np || faq.question_en) : faq.question_en}</span>
+                  <ChevronDown className={`w-4 h-4 shrink-0 transition-transform duration-200 text-muted-foreground ${openId === faq.id ? 'rotate-180' : ''}`} />
+                </button>
+                {openId === faq.id && (
+                  <div className="px-4 pb-4 text-sm text-muted-foreground border-t border-border pt-3" style={{ lineHeight: 1.7 }}>
+                    {lang === 'np' ? (faq.answer_np || faq.answer_en) : faq.answer_en}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
-        {filtered.length === 0 && <p className="text-center text-muted-foreground py-8">{t('noResults')}</p>}
+            ))}
+            {filtered.length === 0 && <p className="text-center text-muted-foreground py-8">{t('noResults')}</p>}
+          </>
+        )}
 
         <div className="text-center pt-8">
           <p className="text-muted-foreground mb-4">{t('stillQuestion')}</p>
           <Button asChild className="bg-[#25D366] hover:bg-[#1ea855] text-white rounded-lg gap-2 min-h-[48px]">
-            <a href="https://wa.me/977XXXXXXXXXX" target="_blank" rel="noopener noreferrer"><MessageCircle className="w-4 h-4" /> Chat on WhatsApp</a>
+            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer"><MessageCircle className="w-4 h-4" /> Chat on WhatsApp</a>
           </Button>
         </div>
       </div>
