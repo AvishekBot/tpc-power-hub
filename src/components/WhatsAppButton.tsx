@@ -1,12 +1,15 @@
 import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSettings } from '@/hooks/use-supabase-data';
 
 const WhatsAppButton = () => {
   const { t } = useLanguage();
+  const { data: settings } = useSettings();
+  const phone = settings?.whatsapp || '977XXXXXXXXXX';
 
   return (
     <a
-      href="https://wa.me/977XXXXXXXXXX?text=Hello%20TPC%20Power%20Solutions!"
+      href={`https://wa.me/${phone}?text=Hello%20TPC%20Power%20Solutions!`}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group"
