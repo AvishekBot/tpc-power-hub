@@ -25,7 +25,7 @@ const StatCounter = ({ value, label }: { value: string; label: string }) => (
 
 // Map icon names from DB to lucide icons
 const iconMap: Record<string, any> = {
-  Shield, Battery: Zap, Zap, Cpu: Zap, CircuitBoard: Zap, Plug: Zap, BatteryCharging: Zap, Sun: Zap, Wrench, Activity: Zap, Server: Zap, Cable: Zap,
+  Shield: ShieldCheck, Battery: Zap, Zap: Zap, Cpu: Zap, CircuitBoard: Zap, Plug: Zap, BatteryCharging: Zap, Sun: Zap, Wrench: Wrench, Activity: Zap, Server: Zap, Cable: Zap,
 };
 
 const Index = () => {
