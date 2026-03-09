@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCartStore } from '@/stores/cartStore';
+import { useSettings } from '@/hooks/use-supabase-data';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Banknote } from 'lucide-react';
