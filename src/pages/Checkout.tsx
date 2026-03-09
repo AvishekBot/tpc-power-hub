@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCartStore } from '@/stores/cartStore';
+import { useSettings } from '@/hooks/use-supabase-data';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Banknote } from 'lucide-react';
@@ -13,6 +14,7 @@ const nepalDistricts = ['Kathmandu', 'Lalitpur', 'Bhaktapur', 'Pokhara', 'Biratn
 const Checkout = () => {
   const { t } = useLanguage();
   const { items, subtotal, clearCart } = useCartStore();
+  const { data: settings } = useSettings();
   const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', city: '', district: '', postal: '', notes: '', payment: 'cod' });
   const [submitted, setSubmitted] = useState(false);
   const [orderId, setOrderId] = useState('');
@@ -64,6 +66,13 @@ const Checkout = () => {
     setSubmitted(true);
     clearCart();
     toast({ title: t('orderSuccess') });
+
+    // Open WhatsApp with order details
+    const whatsappNumber = settings?.whatsapp || '977XXXXXXXXXX';
+    const paymentLabels: Record<string, string> = { khalti: 'Khalti', esewa: 'eSewa', imepay: 'IME Pay', cod: 'Cash on Delivery' };
+    const itemLines = items.map((item) => `• ${item.name} x${item.quantity} = Rs. ${((item.sale_price || item.price) * item.quantity).toLocaleString()}`).join('\n');
+    const message = `🛍️ New Order Received!\n\nOrder ID: ${order.id}\nCustomer: ${form.name}\nPhone: ${form.phone}\nAddress: ${form.address}, ${form.city || ''}\n\nPayment: ${paymentLabels[form.payment] || form.payment}\n\nItems:\n${itemLines}\n\nTotal: Rs. ${total.toLocaleString()}\n\nPlease confirm my order. Thank you!`;
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   if (submitted) {

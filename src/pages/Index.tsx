@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Zap, ArrowRight, Star, ShieldCheck, Users, Truck, Wrench } from 'lucide-react';
+import { Zap, ArrowRight, Star, ShieldCheck, Users, Truck, Wrench, Shield, Battery, Sun, Activity, Cpu, Cable, Flame, Lightbulb, LayoutGrid, GitBranch, ToggleLeft } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCartStore } from '@/stores/cartStore';
 import { useFeaturedProducts, useCategories, useSettings, useReviews } from '@/hooks/use-supabase-data';
@@ -23,9 +23,25 @@ const StatCounter = ({ value, label }: { value: string; label: string }) => (
   </motion.div>
 );
 
-// Map icon names from DB to lucide icons
-const iconMap: Record<string, any> = {
-  Shield: ShieldCheck, Battery: Zap, Zap: Zap, Cpu: Zap, CircuitBoard: Zap, Plug: Zap, BatteryCharging: Zap, Sun: Zap, Wrench: Wrench, Activity: Zap, Server: Zap, Cable: Zap,
+// Map category slugs to unique lucide icons
+const categoryIconMap: Record<string, any> = {
+  'ups-systems': Shield,
+  'home-inverters': Battery,
+  'solar-solutions': Sun,
+  'servo-stabilizers': Activity,
+  'batteries': Zap,
+  'transformers': Cpu,
+  'wiring': Cable,
+  'generators': Flame,
+  'led-lights': Lightbulb,
+  'panel-boards': LayoutGrid,
+  'cables': GitBranch,
+  'switchgear': ToggleLeft,
+  'vfd-drives': Cpu,
+  'rectifiers': GitBranch,
+  'battery-chargers': Battery,
+  'welding-machines': Wrench,
+  'relay-stabilizers': Cable,
 };
 
 const Index = () => {
@@ -123,7 +139,7 @@ const Index = () => {
                     to={`/products?category=${cat.slug}`}
                     className="block bg-card rounded-xl p-4 md:p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-accent border border-border transition-all duration-300 group"
                   >
-                    <Zap className="w-8 h-8 md:w-10 md:h-10 mx-auto text-accent mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-200" />
+                    {(() => { const Icon = categoryIconMap[cat.slug] || Zap; return <Icon className="w-8 h-8 md:w-10 md:h-10 mx-auto text-accent mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-200" />; })()}
                     <div className="font-semibold text-xs md:text-sm text-card-foreground">{cat.name_en}</div>
                     <div className="text-xs text-accent mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-1">
                       {t('viewAll')} <ArrowRight className="w-3 h-3" />
