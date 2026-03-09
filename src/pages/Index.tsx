@@ -139,7 +139,7 @@ const Index = () => {
                     to={`/products?category=${cat.slug}`}
                     className="block bg-card rounded-xl p-4 md:p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-accent border border-border transition-all duration-300 group"
                   >
-                    <Zap className="w-8 h-8 md:w-10 md:h-10 mx-auto text-accent mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-200" />
+                    {(() => { const Icon = categoryIconMap[cat.slug] || Zap; return <Icon className="w-8 h-8 md:w-10 md:h-10 mx-auto text-accent mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-200" />; })()}
                     <div className="font-semibold text-xs md:text-sm text-card-foreground">{cat.name_en}</div>
                     <div className="text-xs text-accent mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-1">
                       {t('viewAll')} <ArrowRight className="w-3 h-3" />

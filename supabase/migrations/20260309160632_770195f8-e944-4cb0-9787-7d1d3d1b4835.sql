@@ -1,0 +1,12 @@
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1621600411688-4be93cd68504?w=600'] WHERE slug = 'home-inverter-1500va';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600'] WHERE slug = 'online-ups-1kva';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600'] WHERE slug = 'servo-stabilizer-5kva';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600'] WHERE slug = 'three-phase-transformer-10kva';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600'] WHERE slug = 'vfd-drive-2-2kw';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600'] WHERE slug = 'solar-inverter-3kw';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1619641805634-98e5c3507f44?w=600'] WHERE slug = 'battery-150ah';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600'] WHERE slug = 'welding-machine-200a';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1635073943211-a0daf26e4476?w=600'] WHERE slug = 'relay-stabilizer-5kva';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1609592424592-29a6ed0a8e57?w=600'] WHERE slug = 'battery-charger-12v';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600'] WHERE slug = 'ac-drive-5-5kw';
+UPDATE products SET images = ARRAY['https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600'] WHERE slug = 'panel-board-8way';
