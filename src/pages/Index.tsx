@@ -23,9 +23,25 @@ const StatCounter = ({ value, label }: { value: string; label: string }) => (
   </motion.div>
 );
 
-// Map icon names from DB to lucide icons
-const iconMap: Record<string, any> = {
-  Shield: ShieldCheck, Battery: Zap, Zap: Zap, Cpu: Zap, CircuitBoard: Zap, Plug: Zap, BatteryCharging: Zap, Sun: Zap, Wrench: Wrench, Activity: Zap, Server: Zap, Cable: Zap,
+// Map category slugs to unique lucide icons
+const categoryIconMap: Record<string, any> = {
+  'ups-systems': Shield,
+  'home-inverters': Battery,
+  'solar-solutions': Sun,
+  'servo-stabilizers': Activity,
+  'batteries': Zap,
+  'transformers': Cpu,
+  'wiring': Cable,
+  'generators': Flame,
+  'led-lights': Lightbulb,
+  'panel-boards': LayoutGrid,
+  'cables': GitBranch,
+  'switchgear': ToggleLeft,
+  'vfd-drives': Cpu,
+  'rectifiers': GitBranch,
+  'battery-chargers': Battery,
+  'welding-machines': Wrench,
+  'relay-stabilizers': Cable,
 };
 
 const Index = () => {
