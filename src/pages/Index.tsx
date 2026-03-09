@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Zap, ArrowRight, Star, ShieldCheck, Users, Truck, Wrench } from 'lucide-react';
+import { Zap, ArrowRight, Star, ShieldCheck, Users, Truck, Wrench, Shield, Battery, Sun, Activity, Cpu, Cable, Flame, Lightbulb, LayoutGrid, GitBranch, ToggleLeft } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCartStore } from '@/stores/cartStore';
 import { useFeaturedProducts, useCategories, useSettings, useReviews } from '@/hooks/use-supabase-data';
