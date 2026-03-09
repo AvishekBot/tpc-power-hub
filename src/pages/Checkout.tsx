@@ -14,6 +14,7 @@ const nepalDistricts = ['Kathmandu', 'Lalitpur', 'Bhaktapur', 'Pokhara', 'Biratn
 const Checkout = () => {
   const { t } = useLanguage();
   const { items, subtotal, clearCart } = useCartStore();
+  const { data: settings } = useSettings();
   const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', city: '', district: '', postal: '', notes: '', payment: 'cod' });
   const [submitted, setSubmitted] = useState(false);
   const [orderId, setOrderId] = useState('');
