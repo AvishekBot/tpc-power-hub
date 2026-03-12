@@ -14,13 +14,13 @@ const WhatsAppButton = () => {
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-3 group"
     >
-      <span className="bg-card text-foreground text-sm font-semibold px-4 py-2 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
+      <span className="bg-card text-foreground text-sm font-semibold px-4 py-2 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap rgb-border">
         {t('chatNow')}
       </span>
       <div className="relative flex items-center justify-center">
         <span className="absolute w-16 h-16 rounded-full bg-[#25D366]/40 animate-ping" />
         <span className="absolute w-14 h-14 rounded-full bg-[#25D366]/20 animate-pulse" />
-        <div className="relative bg-[#25D366] hover:scale-110 transition-transform duration-200 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center">
+        <div className="relative bg-[#25D366] hover:scale-110 transition-transform duration-200 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:shadow-[0_0_25px_rgba(37,211,102,0.5)]">
           <MessageCircle className="w-7 h-7" />
         </div>
       </div>

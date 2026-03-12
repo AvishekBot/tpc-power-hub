@@ -62,7 +62,7 @@ const ProductDetail = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-card rounded-xl aspect-square flex items-center justify-center border border-border overflow-hidden">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-card rounded-xl aspect-square flex items-center justify-center overflow-hidden rgb-border rgb-hover-glow">
             {product.images?.[0] && product.images[0] !== '/placeholder.svg' ? (
               <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
             ) : (
@@ -76,7 +76,7 @@ const ProductDetail = () => {
 
             {avgRating && (
               <div className="flex items-center gap-2 mt-2">
-                <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className={`w-4 h-4 ${i < Math.round(Number(avgRating)) ? 'fill-amber text-amber' : 'text-muted-foreground/30'}`} />)}</div>
+                <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className={`w-4 h-4 ${i < Math.round(Number(avgRating)) ? 'fill-amber text-amber' : 'text-muted-foreground/30'}`} style={i < Math.round(Number(avgRating)) ? { filter: 'drop-shadow(0 0 4px rgba(250,204,21,0.6))' } : {}} />)}</div>
                 <span className="text-sm text-muted-foreground">{avgRating} ({reviews.length} reviews)</span>
               </div>
             )}
@@ -86,7 +86,7 @@ const ProductDetail = () => {
             </div>
 
             <div className="mt-4 flex items-baseline gap-3">
-              <span className="text-2xl md:text-3xl font-extrabold text-accent">Rs. {(product.sale_price || product.price).toLocaleString()}</span>
+              <span className="text-2xl md:text-3xl font-extrabold text-accent" style={{ textShadow: '0 0 15px rgba(250,204,21,0.3)' }}>Rs. {(product.sale_price || product.price).toLocaleString()}</span>
               {product.sale_price && <span className="text-base md:text-lg text-muted-foreground line-through">Rs. {product.price.toLocaleString()}</span>}
             </div>
 
@@ -103,8 +103,9 @@ const ProductDetail = () => {
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
                 disabled={!inStock}
-                className="bg-amber hover:bg-amber/90 text-amber-foreground rounded-lg px-6 md:px-8 h-12 font-bold gap-2 hover:scale-105 transition-all duration-200"
+                className="bg-amber hover:bg-amber/90 text-amber-foreground rounded-lg px-6 md:px-8 h-12 font-bold gap-2 hover:scale-105 transition-all duration-200 rgb-hover-glow"
                 onClick={() => { for (let i = 0; i < qty; i++) addItem({ id: product.id, name: product.name, price: product.price, sale_price: product.sale_price, image: product.images?.[0] || '/placeholder.svg' }); }}
+                style={{ animation: inStock ? 'rgb-glow-pulse 6s linear infinite' : 'none' }}
               >
                 <ShoppingCart className="w-4 h-4" /> {t('addToCart')}
               </Button>
@@ -141,8 +142,8 @@ const ProductDetail = () => {
           </TabsContent>
           <TabsContent value="reviews" className="mt-4 space-y-4">
             {reviews.map((r) => (
-              <div key={r.id} className="bg-card p-4 rounded-xl border border-border">
-                <div className="flex gap-1 mb-2">{Array.from({ length: r.rating || 0 }).map((_, i) => <Star key={i} className="w-3 h-3 fill-amber text-amber" />)}</div>
+              <div key={r.id} className="bg-card p-4 rounded-xl border border-border rgb-hover-glow">
+                <div className="flex gap-1 mb-2">{Array.from({ length: r.rating || 0 }).map((_, i) => <Star key={i} className="w-3 h-3 fill-amber text-amber" style={{ filter: 'drop-shadow(0 0 3px rgba(250,204,21,0.5))' }} />)}</div>
                 <p className="text-sm text-card-foreground">"{r.message}"</p>
                 <div className="mt-2 text-xs text-muted-foreground">{r.customer_name}, {r.customer_city}</div>
               </div>
@@ -153,11 +154,11 @@ const ProductDetail = () => {
 
         {related.length > 0 && (
           <div className="mt-16">
-            <h2 className="text-xl font-extrabold mb-6 text-foreground">Related Products</h2>
+            <h2 className="text-xl font-extrabold mb-6 text-gradient-heading">Related Products</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {related.map((p) => (
-                <Link key={p.id} to={`/products/${p.slug}`} className="bg-card rounded-xl p-4 border border-border hover:border-accent hover:-translate-y-1 transition-all duration-300">
-                  <div className="h-28 md:h-32 bg-muted rounded flex items-center justify-center mb-3">
+                <Link key={p.id} to={`/products/${p.slug}`} className="bg-card rounded-xl p-4 border border-border hover:-translate-y-1 transition-all duration-300 rgb-hover-glow">
+                  <div className="h-28 md:h-32 bg-muted rounded flex items-center justify-center mb-3 overflow-hidden">
                     {p.images?.[0] && p.images[0] !== '/placeholder.svg' ? (
                       <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover rounded" />
                     ) : (

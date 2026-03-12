@@ -51,21 +51,28 @@ const Products = () => {
   }, [products, search, selectedCategories, sortBy, inStockOnly]);
 
   const FilterSidebar = () => (
-    <div className="space-y-6">
+    <div className="space-y-6 glass-card rounded-xl p-5 dark:bg-opacity-60 bg-card">
       <div>
         <h3 className="font-bold text-sm mb-3 text-foreground">{t('filterBy')}</h3>
         <div className="space-y-2">
           {(categories || []).map((cat) => (
-            <label key={cat.slug} className="flex items-center gap-2 text-sm cursor-pointer text-foreground">
-              <input type="checkbox" checked={selectedCategories.includes(cat.slug)} onChange={() => toggleCategory(cat.slug)} className="rounded border-border text-accent focus:ring-accent" />
-              {cat.name_en}
+            <label key={cat.slug} className="flex items-center gap-2 text-sm cursor-pointer text-foreground group">
+              <input
+                type="checkbox"
+                checked={selectedCategories.includes(cat.slug)}
+                onChange={() => toggleCategory(cat.slug)}
+                className="rounded border-border text-accent focus:ring-accent"
+              />
+              <span className={selectedCategories.includes(cat.slug) ? 'text-accent font-semibold' : 'group-hover:text-accent transition-colors'}>
+                {cat.name_en}
+              </span>
             </label>
           ))}
         </div>
       </div>
       <div>
         <h3 className="font-bold text-sm mb-3 text-foreground">{t('sortBy')}</h3>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground min-h-[48px]">
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground min-h-[48px] focus:ring-2 focus:ring-accent/50 transition-all">
           <option value="featured">Featured</option>
           <option value="price-asc">Price: Low → High</option>
           <option value="price-desc">Price: High → Low</option>
@@ -80,19 +87,31 @@ const Products = () => {
 
   return (
     <div className="bg-background min-h-screen transition-colors duration-300">
-      <div className="bg-navy py-8">
-        <div className="container mx-auto px-4">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-primary-foreground">{t('products')}</h1>
+      <div className="bg-navy py-8 relative overflow-hidden">
+        <div className="particles-container">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div key={i} className="particle" style={{ left: `${Math.random() * 100}%`, bottom: '-5px', animationDuration: `${6 + Math.random() * 8}s`, animationDelay: `${Math.random() * 5}s` }} />
+          ))}
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-primary-foreground">
+            <span className="rgb-gradient-text">{t('products')}</span>
+          </h1>
           <div className="mt-4 relative max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input placeholder={t('searchProducts')} value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 bg-card border-0 rounded-lg min-h-[48px]" />
+            <Input
+              placeholder={t('searchProducts')}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10 bg-white/10 border-white/20 rounded-lg min-h-[48px] text-primary-foreground placeholder:text-white/40 focus:border-accent focus:ring-accent/30 focus:bg-white/15 transition-all"
+            />
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
         <div className="lg:hidden mb-4">
-          <Button variant="outline" className="gap-2 min-h-[48px]" onClick={() => setMobileFilters(true)}>
+          <Button variant="outline" className="gap-2 min-h-[48px] rgb-hover-glow" onClick={() => setMobileFilters(true)}>
             <SlidersHorizontal className="w-4 h-4" /> Filters
           </Button>
         </div>
@@ -122,15 +141,15 @@ const Products = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
                 {filtered.map((product) => (
-                  <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-accent border border-border transition-all duration-300 group">
-                    <div className="relative h-40 md:h-48 bg-muted flex items-center justify-center">
+                  <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card rounded-xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 border border-border transition-all duration-300 group rgb-hover-glow">
+                    <div className="relative h-40 md:h-48 bg-muted flex items-center justify-center overflow-hidden">
                       {product.images?.[0] && product.images[0] !== '/placeholder.svg' ? (
-                        <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" />
+                        <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <Zap className="w-12 md:w-16 h-12 md:h-16 text-muted-foreground/30" />
                       )}
                       {(product.stock || 0) === 0 && <span className="absolute top-2 left-2 bg-destructive text-destructive-foreground text-xs font-bold px-2 py-1 rounded">{t('outOfStock')}</span>}
-                      {product.sale_price && (product.stock || 0) > 0 && <span className="absolute top-2 left-2 bg-amber text-amber-foreground text-xs font-bold px-2 py-1 rounded">{t('sale')}</span>}
+                      {product.sale_price && (product.stock || 0) > 0 && <span className="absolute top-2 left-2 rgb-gradient-bg text-white text-xs font-bold px-2 py-1 rounded">{t('sale')}</span>}
                     </div>
                     <div className="p-4">
                       <h3 className="font-bold text-sm text-card-foreground truncate">{product.name}</h3>
