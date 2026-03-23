@@ -26,7 +26,7 @@ const About = () => {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-extrabold mb-6 text-foreground">{t('companyStory')}</h2>
           <p className="text-muted-foreground mb-4" style={{ lineHeight: 1.7 }}>
-            T.P.C Power Solutions was founded with a vision to provide world-class power solutions to homes and industries across Nepal. Starting from a small workshop in Kathmandu, we have grown to become one of Nepal's most trusted names in the electrical industry.
+            T.P.C Power Solutions was founded with a vision to provide world-class power solutions to homes and industries across Nepal. Starting from a small workshop in Bharatpur, we have grown to become one of Nepal's most trusted names in the electrical industry.
           </p>
           <p className="text-muted-foreground" style={{ lineHeight: 1.7 }}>
             Today, we manufacture and supply a comprehensive range of power products including UPS systems, servo stabilizers, transformers, inverters, VFD drives, solar solutions, and much more. Our ISO 9001:2015 certification is a testament to our commitment to quality.
